@@ -84,6 +84,7 @@ class sum4all(Plugin):
             self.xunfei_api_secret = self.keys.get("xunfei_api_secret", "")
             self.perplexity_key = self.keys.get("perplexity_key", "")
             self.flomo_key = self.keys.get("flomo_key", "")
+            self.models = self.keys.get("models", "gpt-3.5-turbo")
 
             # 提取sum服务的配置
             self.url_sum_enabled = self.url_sum.get("enabled", False)
@@ -808,7 +809,7 @@ class sum4all(Plugin):
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {api_key}"
             }
-            model = "gpt-4o-mini"
+            model = self.models
         elif self.image_sum_service == "azure":
             api_key = self.open_ai_api_key
             api_base = f"{self.open_ai_api_base}/openai/deployments/{self.azure_deployment_id}/chat/completions?api-version=2024-02-15-preview"
@@ -816,10 +817,10 @@ class sum4all(Plugin):
                 "Content-Type": "application/json",
                 "api-key": api_key
             }
-            model = "gpt-4o-mini"
+            model = self.models
         elif self.image_sum_service == "xunfei":
             api_key = self.xunfei_api_key
-            api_base = "https://spark.sum4all.site/v1/chat/completions"
+            api_base = "http://192.168.6.203:9090/v1/chat/completions"
             model = "spark-chat-vision"
             headers = {
                 "Content-Type": "application/json",
