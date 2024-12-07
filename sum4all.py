@@ -82,6 +82,8 @@ class sum4all(Plugin):
             self.xunfei_app_id = self.keys.get("xunfei_app_id", "")
             self.xunfei_api_key = self.keys.get("xunfei_api_key", "")
             self.xunfei_api_secret = self.keys.get("xunfei_api_secret", "")
+            self.xunfei_api_base = self.keys.get("xunfei_api_base", "")
+            self.xunfei_model = self.keys.get("xunfei_model", "")
             self.perplexity_key = self.keys.get("perplexity_key", "")
             self.flomo_key = self.keys.get("flomo_key", "")
             self.models = self.keys.get("models", "gpt-3.5-turbo")
@@ -820,8 +822,8 @@ class sum4all(Plugin):
             model = self.models
         elif self.image_sum_service == "xunfei":
             api_key = self.xunfei_api_key
-            api_base = "https://spark-api-open.xf-yun.com/v1/chat/completions"
-            model = "4.0Ultra"
+            api_base = self.xunfei_api_base
+            model = self.xunfei_model
             headers = {
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {api_key}"
