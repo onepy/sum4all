@@ -87,6 +87,8 @@ class sum4all(Plugin):
             self.perplexity_key = self.keys.get("perplexity_key", "")
             self.flomo_key = self.keys.get("flomo_key", "")
             self.models = self.keys.get("models", "gpt-3.5-turbo")
+            self.open_ai_api_bases = self.keys.get("open_ai_api_bases", "https://api.openai.com/v1")
+            self.open_ai_api_keys = self.keys.get("open_ai_api_keys", "")
 
             # 提取sum服务的配置
             self.url_sum_enabled = self.url_sum.get("enabled", False)
@@ -105,7 +107,7 @@ class sum4all(Plugin):
 
             self.file_sum_enabled = self.file_sum.get("enabled", False)
             self.file_sum_service = self.file_sum.get("service", "")
-            self.max_file_size = self.file_sum.get("max_file_size", 15000)
+            self.max_file_size = self.file_sum.get("max_file_size", 25000)
             self.file_sum_group = self.file_sum.get("group", True)
             self.file_sum_qa_prefix = self.file_sum.get("qa_prefix", "问")
             self.file_sum_prompt = self.file_sum.get("prompt", "")
@@ -334,8 +336,8 @@ class sum4all(Plugin):
         logger.info('Handling Sum4All request...')
         # 根据sum_service的值选择API密钥和基础URL
         if self.url_sum_service == "openai":
-            api_key = self.open_ai_api_key
-            api_base = self.open_ai_api_base
+            api_key = self.open_ai_api_keys
+            api_base = self.open_ai_api_bases
             model = self.model
         elif self.url_sum_service == "sum4all":
             api_key = self.sum4all_key
@@ -478,8 +480,8 @@ class sum4all(Plugin):
     def handle_search(self, content, e_context):
         # 根据sum_service的值选择API密钥和基础URL
         if self.search_sum_service == "openai":
-            api_key = self.open_ai_api_key
-            api_base = self.open_ai_api_base
+            api_key = self.open_ai_api_keys
+            api_base = self.open_ai_api_bases
             model = self.model
         elif self.search_sum_service == "sum4all":
             api_key = self.sum4all_key
